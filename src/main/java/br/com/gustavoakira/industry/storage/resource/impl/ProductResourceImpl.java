@@ -1,6 +1,8 @@
 package br.com.gustavoakira.industry.storage.resource.impl;
 
+import br.com.gustavoakira.industry.storage.dto.AddDTO;
 import br.com.gustavoakira.industry.storage.entity.Product;
+import br.com.gustavoakira.industry.storage.messenger.ProductMessenger;
 import br.com.gustavoakira.industry.storage.resource.ProductResource;
 import br.com.gustavoakira.industry.storage.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ public class ProductResourceImpl implements ProductResource {
 
     @Autowired
     private ProductService service;
+
+    @Autowired
+    private ProductMessenger messenger;
 
     @Override
     @GetMapping("product/{id}")
@@ -47,5 +52,19 @@ public class ProductResourceImpl implements ProductResource {
     public ResponseEntity<Void> removeProduct(@PathVariable Long id) {
         service.removeProduct(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    @PutMapping("product/{id}/quantity/add")
+    public ResponseEntity<Void> addProduct(@PathVariable Long id, @RequestBody AddDTO quantity) {
+        Product product = service.getProduct(id);
+        messenger.sendMessage("RequestProduct","");
+        return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    @PutMapping("product/{id}/quantity/reduce")
+    public ResponseEntity<Void> reduceProduct(Long id, Integer quantity) {
+        return null;
     }
 }

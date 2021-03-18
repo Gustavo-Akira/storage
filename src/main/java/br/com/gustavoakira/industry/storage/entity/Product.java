@@ -17,5 +17,5 @@ public class Product {
 
     private String name;
 
-    private Integer quantity;
+    private Integer quantity = 0;
 }

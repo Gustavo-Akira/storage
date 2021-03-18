@@ -1,6 +1,7 @@
 package br.com.gustavoakira.industry.storage.service.impl;
 
 import br.com.gustavoakira.industry.storage.entity.Product;
+import br.com.gustavoakira.industry.storage.exception.ProductNotFoundException;
 import br.com.gustavoakira.industry.storage.repository.ProductRepository;
 import br.com.gustavoakira.industry.storage.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProduct(Long id) {
-        return repository.findById(id).orElseThrow();
+        return repository.findById(id).orElseThrow(()->new ProductNotFoundException(id));
     }
 
     @Override
